@@ -1,4 +1,7 @@
+# unlike with docker, in k8s we cannot simply deploy just a single vanilla container. the smallest thing we can deploy in a POD. The requirement of a pod is that we will run one or more container inside a pod.
+# those containers MUST absolutely have a tight integration so this is not intended for different containers, it is for containers that would not be able to run without the other one(s). For instance, a container for a db, and a container for a db logger ->> without the db, the db locker can't survive
 apiVersion: v1
+# we create a pod object
 kind: Pod
 metadata:
     name: client-pod
@@ -6,7 +9,12 @@ metadata:
         component: web
 spec:
     containers:
+        # there is only one container is this case
         - name: client
+          # we give to this container an arbitrary name of client
           image: ivanpilot/client
+          # this is the name of the image on gocker from which we will create the container
           ports:
             - containerPort: 3000
+            # this is similar to the port mapping we do in docker. It means that we expose to the outside world the port 3000. The reason why we take 3000 in this example is because on the react app in the default.conf file of the static nginx server we use the port 3000 so it matches it and we expose it
+            # BUT this port mapping above IS NOT ENOUGH. for the netword to work we need the client_node_port file which 

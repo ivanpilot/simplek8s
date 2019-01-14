@@ -1,4 +1,13 @@
+# unlike with docker, with k8s we do not create container per se but object and to configure these object we write 1 config file per object
+# config file is use to create the object we want
+# an object is a 'thing' that exists inside a k8s cluster that allow our app to work the way we expect it to
+# different object have different purpose. for instance, a 'Pod' is use to run a container while a 'Service' is use to set up networking configuration inside our k8s cluter
+
+
+# each API versio defines a different set of 'objects' we can use. it give a scope or limit regarding the type of object that we can specify we want to create for any type of config file
+# version 'v1' gives us access to a predefined type of objects that are available to us. SO the type of object we can create via our config file depends of the version we specify at the beginning of the file
 apiVersion: v1
+# different object have different type so the 'kind' entry specify the type of object we write
 kind: Service
 metadata:
     name: client-node-port
